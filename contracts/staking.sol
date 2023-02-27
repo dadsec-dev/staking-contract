@@ -2,6 +2,7 @@
 pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721";
 
 //users stake usdt
 //user get 20% APY CVIII as reward;
@@ -10,6 +11,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract StakERC20 is Ownable {
     IERC20 public rewardToken;
     IERC20 public stakeToken;
+    IERC721 public BAYC = "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D";
 
     uint256 constant SECONDS_PER_YEAR = 31536000;
 
@@ -42,6 +44,7 @@ contract StakERC20 is Ownable {
     }
 
     function stake(uint256 amount) external {
+        require(BAYC.balanceOf(msg.sender >= 1, "Only BAYC holders can stake"));
         User storage _user = user[msg.sender];
 
         uint256 _amount = _user.stakedAmount;//curently 0
